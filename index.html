@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUFFI - Login</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#0a0e17 0%,#1a1f2e 100%);color:#ffffff;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;}:root{--gold:#FFD700;--gold-dark:#FFA500;--card-bg:#1a2336;--gray:#b8bcc7;}.container{text-align:center;max-width:420px;width:100%;}.logo{width:120px;height:120px;margin-bottom:20px;border-radius:24px;box-shadow:0 15px 40px rgba(255,215,0,.4);}.title{font-size:42px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;}.subtitle{color:var(--gray);font-size:18px;font-weight:500;margin-bottom:32px;}.stats,.coins{background:var(--card-bg);border:2px solid rgba(255,215,0,.3);border-radius:20px;padding:24px;margin-bottom:32px;box-shadow:0 10px 35px rgba(255,215,0,.2);}.stats-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}.stat-label{font-size:15px;color:var(--gray);}.stat-value{font-size:24px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}.card{background:var(--card-bg);padding:40px 32px;border-radius:24px;border:2px solid rgba(255,215,0,.2);box-shadow:0 25px 50px rgba(0,0,0,.5);margin-bottom:24px;transition:all .3s ease;}.card:hover{transform:translateY(-6px);}.card h3{font-size:28px;font-weight:700;color:#fff;margin-bottom:32px;}input{width:100%;padding:16px 20px;margin-bottom:20px;border:2px solid rgba(255,255,255,.1);border-radius:16px;background:rgba(255,255,255,.05);color:#fff;font-size:16px;transition:all .3s ease;}input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.2);}input::placeholder{color:var(--gray);}.btn-primary{width:100%;padding:18px;border:none;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#1a1a1a;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s ease;text-transform:uppercase;box-shadow:0 10px 25px rgba(255,215,0,.4);}.btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(255,215,0,.6);}.register{margin-top:24px;font-size:15px;color:var(--gray);}.register a{color:var(--gold);text-decoration:none;font-weight:600;}.coins-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:16px;}.coin-list{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}.coin{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);padding:14px 22px;border-radius:24px;font-size:14px;font-weight:700;color:#fff;border:2px solid rgba(255,215,0,.3);transition:all .3s ease;cursor:pointer;}.coin:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 10px 25px rgba(255,215,0,.4);}.coin-img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);}@media (max-width:480px){.container{padding:0 16px;}.coin-list{flex-direction:column;gap:12px;}}</style>
+</head>
+<body>
+<div class="container">
+<img src="logo.png" alt="FLUFFI Logo" class="logo">
+<div class="title">FLUFFI</div><div class="subtitle">Mine Crypto Easily</div>
+<div class="stats">
+<div class="stats-row"><span class="stat-label">Users Online</span><span class="stat-value" id="users">2,847</span></div>
+<div class="stats-row"><span class="stat-label">Mining Every Day</span><span class="stat-value">2,03,046</span></div>
+</div>
+<div class="card">
+<h3>Login to Start Mining</h3>
+<input type="text" placeholder="Username" id="username">
+<input type="password" placeholder="Password" id="password">
+<button class="btn-primary" onclick="login(event)">Start Mining</button>
+<div class="register">Don't have account? <a href="#">Create Account</a></div>
+</div>
+<div class="coins">
+<div class="coins-title">Supported Coins</div>
+<div class="coin-list">
+<span class="coin" onclick="goToMine('fluffi')"><img src="https://cryptologos.cc/logos/fluffy-coin-fluffy-logo.png" class="coin-img">FLUFFI</span>
+<span class="coin" onclick="goToMine('shib')"><img src="https://cryptologos.cc/logos/shiba-inu-shib-logo.png" class="coin-img">SHIB</span>
+<span class="coin" onclick="goToMine('trx')"><img src="https://cryptologos.cc/logos/tron-trx-logo.png" class="coin-img">TRX</span>
+</div></div></div>
+<script>
+function login(event){const user=document.getElementById('username').value.trim(),pass=document.getElementById('password').value.trim(),btn=event.target;if(!user||!pass){alert('Please enter username & password');return;}localStorage.setItem('fluffiUser',user);localStorage.setItem('fluffiBalances','{"fluff":0,"shib":0,"trx":0}');btn.innerHTML='Redirecting...';setTimeout(()=>{window.location.href='home.html';},1000);}function goToMine(coin){localStorage.setItem('fluffiUser','Guest');localStorage.setItem('fluffiBalances','{"fluff":0,"shib":0,"trx":0}');window.location.href=`mine.html?coin=${coin}`;}function updateUsers(){const el=document.getElementById('users'),num=parseInt(el.innerText.replace(/,/g,''));el.innerText=(num>=3000?2000:num+Math.floor(Math.random()*10)+1).toLocaleString();}setInterval(updateUsers,3000);if(localStorage.getItem('fluffiUser'))window.location.href='home.html';
+</script>
+</body>
+</html>
